@@ -1,0 +1,12 @@
+name = "multiweb-downloader-proxy"
+main = "cors-proxy-worker.js"
+compatibility_date = "2024-11-01"
+
+# Free tier is plenty for personal use. Deploy with:
+#   npx wrangler login
+#   npx wrangler deploy
+#
+# Wrangler will print the live URL, e.g.:
+#   https://multiweb-downloader-proxy.<your-subdomain>.workers.dev
+#
+# Paste that (with a trailing "?url=") into MultiWeb Downloader's settings.
