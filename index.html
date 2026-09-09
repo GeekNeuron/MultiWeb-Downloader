@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<title>MultiWeb Downloader — دانلود چندگانه از هر لینک</title>
+<meta name="description" content="مدیر دانلود چندگانه برای پوشه و فایل گیت‌هاب، فایل مستقیم، و لینک‌های کشف‌شده در یک صفحه‌ی وب.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231565C0'/%3E%3Cpath d='M16 8v12M10 15l6 6 6-6' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================================================================
+     Icon sprite — plain line icons, no external icon-font dependency.
+     =================================================================== -->
+<svg style="display:none" aria-hidden="true">
+	<defs>
+		<g id="icon-stroke-defaults" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></g>
+		<symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+		<symbol id="icon-play" viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20" fill="currentColor"/></symbol>
+		<symbol id="icon-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/></symbol>
+		<symbol id="icon-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+		<symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+			<path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+		</symbol>
+		<symbol id="icon-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+		</symbol>
+		<symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+		</symbol>
+		<symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+			<circle cx="12" cy="12" r="3"/>
+			<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+		</symbol>
+		<symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+		</symbol>
+		<symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+		</symbol>
+		<symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+		</symbol>
+		<symbol id="icon-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"/><line x1="10" y1="13" x2="14" y2="13"/>
+		</symbol>
+		<symbol id="icon-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+		</symbol>
+		<symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
+		</symbol>
+		<symbol id="icon-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+		</symbol>
+		<symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M12 2 1 21h22L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+		</symbol>
+		<symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+		</symbol>
+		<symbol id="icon-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+		</symbol>
+		<symbol id="icon-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/>
+		</symbol>
+	</defs>
+</svg>
+
+<div class="app">
+
+	<!-- ===== نوار ابزار بالا ===== -->
+	<header class="appbar">
+		<div class="appbar-brand">
+			<span class="brand-mark" aria-hidden="true">
+				<svg width="20" height="20"><use href="#icon-download"></use></svg>
+			</span>
+			<div class="brand-text">
+				<h1>MultiWeb Downloader</h1>
+				<p>دانلود چندگانه از گیت‌هاب، لینک مستقیم و صفحه‌ی وب</p>
+			</div>
+		</div>
+		<div class="appbar-actions">
+			<button type="button" id="addBtn" class="toolbtn toolbtn-primary">
+				<svg width="16" height="16"><use href="#icon-plus"></use></svg>
+				افزودن لینک
+			</button>
+			<button type="button" id="pasteClipboardBtn" class="toolbtn" title="خواندن لینک‌ها از کلیپبورد و افزودن مستقیم به صف">
+				<svg width="16" height="16"><use href="#icon-clipboard"></use></svg>
+				افزودن از کلیپبورد
+			</button>
+			<button type="button" id="startAllBtn" class="toolbtn" disabled>
+				<svg width="16" height="16"><use href="#icon-play"></use></svg>
+				شروع همه
+			</button>
+			<button type="button" id="pauseAllBtn" class="toolbtn" disabled>
+				<svg width="16" height="16"><use href="#icon-pause"></use></svg>
+				<span id="pauseAllLabel">توقف همه</span>
+			</button>
+			<button type="button" id="settingsBtn" class="toolbtn toolbtn-icon" aria-label="تنظیمات" title="تنظیمات">
+				<svg width="18" height="18"><use href="#icon-settings"></use></svg>
+			</button>
+			<button type="button" id="themeToggle" class="toolbtn toolbtn-icon" aria-label="حالت شب/روز" title="حالت شب/روز">
+				<svg width="18" height="18" id="themeIconSun"><use href="#icon-sun"></use></svg>
+				<svg width="18" height="18" id="themeIconMoon" hidden><use href="#icon-moon"></use></svg>
+			</button>
+		</div>
+	</header>
+
+	<div class="workspace">
+
+		<!-- ===== سایدبار فیلتر ===== -->
+		<nav class="sidebar" aria-label="فیلتر دانلودها">
+			<button type="button" class="sidebar-item is-active" data-filter="all">
+				<span>همه</span><span class="count mono" dir="ltr" id="count-all">0</span>
+			</button>
+			<button type="button" class="sidebar-item" data-filter="active">
+				<span>در حال دانلود</span><span class="count mono" dir="ltr" id="count-active">0</span>
+			</button>
+			<button type="button" class="sidebar-item" data-filter="queued">
+				<span>در صف</span><span class="count mono" dir="ltr" id="count-queued">0</span>
+			</button>
+			<button type="button" class="sidebar-item" data-filter="done">
+				<span>تمام‌شده</span><span class="count mono" dir="ltr" id="count-done">0</span>
+			</button>
+			<button type="button" class="sidebar-item" data-filter="error">
+				<span>خطا</span><span class="count mono" dir="ltr" id="count-error">0</span>
+			</button>
+
+			<hr class="sidebar-rule">
+
+			<label class="sidebar-toggle">
+				<input type="checkbox" id="combineToggle">
+				<span>ادغام در یک بسته</span>
+			</label>
+
+			<button type="button" class="sidebar-link" id="clearFinishedBtn">
+				<svg width="14" height="14"><use href="#icon-trash"></use></svg>
+				پاک‌کردن موردهای تمام‌شده
+			</button>
+		</nav>
+
+		<!-- ===== لیست دانلودها ===== -->
+		<main class="list-panel">
+			<div class="list-header" aria-hidden="true">
+				<span class="col col-name">نام</span>
+				<span class="col col-size">حجم / پیشرفت</span>
+				<span class="col col-speed">سرعت</span>
+				<span class="col col-status">وضعیت</span>
+				<span class="col col-actions"></span>
+			</div>
+
+			<ol class="dl-list" id="queueList"></ol>
+
+			<div class="empty-state" id="emptyState">
+				<svg width="40" height="40"><use href="#icon-download"></use></svg>
+				<p>صف دانلود خالی است.</p>
+				<button type="button" class="btn-link" id="emptyAddBtn">یک لینک اضافه کنید</button>
+			</div>
+
+			<div class="combine-bar" id="combineBar" hidden>
+				<p>حالت «ادغام در یک بسته» فعال است — فایل‌های موردهای تمام‌شده در یک بسته‌ی مشترک نگه‌داشته می‌شوند.</p>
+				<button type="button" class="toolbtn toolbtn-primary" id="finalizeCombineBtn" disabled>
+					بستن و ذخیره‌ی بسته <span class="mono" id="combineFileCount" dir="ltr">(۰ فایل)</span>
+				</button>
+			</div>
+		</main>
+	</div>
+
+	<!-- ===== نوار وضعیت پایین ===== -->
+	<footer class="statusbar">
+		<span id="statusSummary">صف خالی است.</span>
+		<span class="statusbar-sep" aria-hidden="true">·</span>
+		<span>ذخیره‌سازی فقط در همین مرورگر — هیچ فایلی به سروری ارسال نمی‌شود</span>
+	</footer>
+</div>
+
+<div class="toast-host" id="toastHost" aria-live="polite"></div>
+
+<!-- ===== دیالوگ افزودن لینک ===== -->
+<dialog id="addDialog" class="app-dialog">
+	<form id="intakeForm" method="dialog">
+		<div class="dialog-title-row">
+			<h2>افزودن لینک به صف</h2>
+			<button type="button" class="btn-link" id="pasteIntoIntakeBtn">
+				<svg width="13" height="13"><use href="#icon-clipboard"></use></svg>
+				جای‌گذاری از کلیپبورد
+			</button>
+		</div>
+		<label for="intakeInput" class="visually-hidden">لینک یا لینک‌ها</label>
+		<textarea
+			id="intakeInput"
+			class="mono"
+			dir="ltr"
+			rows="5"
+			placeholder="یک یا چند لینک را بچسبانید — هر خط یک مورد…"
+			autocomplete="off"
+			spellcheck="false"
+		></textarea>
+		<p class="dialog-hint">
+			نمونه‌ها:
+			<span class="mono" dir="ltr">github.com/user/repo/tree/main/src</span> ·
+			<span class="mono" dir="ltr">github.com/user/repo/blob/main/file.js</span> ·
+			یا هر لینک مستقیم به فایل یا صفحه.
+		</p>
+		<div class="dialog-actions">
+			<button type="button" class="toolbtn" id="cancelAddBtn">انصراف</button>
+			<button type="submit" class="toolbtn toolbtn-primary">افزودن به صف</button>
+		</div>
+	</form>
+</dialog>
+
+<!-- ===== دیالوگ تنظیمات ===== -->
+<dialog id="settingsDialog" class="app-dialog app-dialog-wide">
+	<div class="dialog-head">
+		<h2>تنظیمات</h2>
+		<button type="button" class="dialog-close" id="closeSettingsBtn" aria-label="بستن">
+			<svg width="18" height="18"><use href="#icon-x"></use></svg>
+		</button>
+	</div>
+
+	<div class="settings-grid">
+		<div class="settings-field settings-field-wide">
+			<label for="tokenInput">توکن گیت‌هاب <span class="settings-note">(اختیاری — برای ریپوهای خصوصی و افزایش سقف درخواست)</span></label>
+			<input id="tokenInput" class="mono" dir="ltr" type="password" autocomplete="off" placeholder="ghp_…">
+			<a class="settings-link" href="https://github.com/settings/tokens/new?description=MultiWeb%20Downloader&scopes=repo" target="_blank" rel="noopener">ساخت توکن جدید در گیت‌هاب ↗</a>
+			<p class="settings-note">توکن فقط در مرورگر شما (localStorage) نگه‌داری می‌شود.</p>
+		</div>
+
+		<div class="settings-field">
+			<label for="itemConcurrency">موردهای هم‌زمان در صف</label>
+			<input id="itemConcurrency" class="mono" dir="ltr" type="number" min="1" max="6" value="2">
+		</div>
+		<div class="settings-field">
+			<label for="fileConcurrency">فایل‌های هم‌زمان در هر پوشه</label>
+			<input id="fileConcurrency" class="mono" dir="ltr" type="number" min="1" max="30" value="12">
+		</div>
+
+		<div class="settings-field settings-field-wide">
+			<label for="proxyInput">پراکسی CORS سفارشی <span class="settings-note">(پیشرفته، اختیاری)</span></label>
+			<input id="proxyInput" class="mono" dir="ltr" type="text" autocomplete="off" placeholder="https://your-worker.workers.dev/?url=">
+			<p class="settings-note settings-warn">
+				اگر پر شود، لینک صفحه‌ها/فایل‌هایی که مرورگر به‌خاطر CORS نمی‌تواند مستقیم بخواند، از این آدرس عبور داده می‌شوند —
+				یعنی آن سرویس به لینک هدف (و شاید محتوایش) دسترسی پیدا می‌کند. فایل <span class="mono" dir="ltr">cors-proxy-worker.js</span>
+				همراهِ این پروژه یک نمونه‌ی آماده برای Cloudflare Workers است.
+			</p>
+		</div>
+
+		<div class="settings-field settings-field-wide settings-io">
+			<label>پشتیبان‌گیری از صف</label>
+			<div class="settings-io-actions">
+				<button type="button" class="toolbtn" id="exportQueueBtn">
+					<svg width="15" height="15"><use href="#icon-download"></use></svg>
+					خروجی JSON از صف فعلی
+				</button>
+				<label class="toolbtn toolbtn-file">
+					<svg width="15" height="15"><use href="#icon-upload"></use></svg>
+					ورودی از فایل JSON
+					<input type="file" id="importQueueInput" accept="application/json" class="visually-hidden">
+				</label>
+			</div>
+			<p class="settings-note">فقط لینک‌ها (و حالتِ ادغام) ذخیره می‌شود؛ با ورودی گرفتن، موردها دوباره به صف اضافه می‌شوند (بدون شروع خودکار).</p>
+		</div>
+	</div>
+</dialog>
+
+<template id="rowTemplate">
+	<li class="dl-row" data-status="queued">
+		<div class="row-icon" data-kind=""></div>
+		<div class="row-main">
+			<div class="row-name"></div>
+			<div class="row-sub mono" dir="ltr"></div>
+			<div class="row-progress-track" hidden><div class="row-progress-fill"></div></div>
+			<p class="row-message" aria-live="polite"></p>
+
+			<!-- بخش کشف‌لینک برای صفحه‌های وب -->
+			<div class="link-picker" hidden>
+				<div class="link-picker-head">
+					<button type="button" class="link-picker-selectall">انتخاب همه‌ی فایل‌مانندها</button>
+					<span class="link-picker-count mono" dir="ltr"></span>
+				</div>
+				<ul class="link-picker-list"></ul>
+				<button type="button" class="toolbtn toolbtn-primary link-picker-add">افزودن انتخاب‌شده‌ها به صف</button>
+			</div>
+		</div>
+
+		<div class="row-meta">
+			<div class="row-col row-col-size mono" dir="ltr">—</div>
+			<div class="row-col row-col-speed mono" dir="ltr">—</div>
+			<div class="row-col row-col-status"><span class="status-chip" data-status="queued">در صف</span></div>
+		</div>
+
+		<div class="row-actions">
+			<button type="button" class="row-btn act-start" title="شروع"><svg width="15" height="15"><use href="#icon-play"></use></svg></button>
+			<button type="button" class="row-btn act-pause" title="توقف" hidden><svg width="15" height="15"><use href="#icon-pause"></use></svg></button>
+			<button type="button" class="row-btn act-resume" title="ادامه" hidden><svg width="15" height="15"><use href="#icon-play"></use></svg></button>
+			<button type="button" class="row-btn act-retry" title="تلاش دوباره" hidden><svg width="15" height="15"><use href="#icon-refresh"></use></svg></button>
+			<button type="button" class="row-btn act-cancel" title="لغو" hidden><svg width="15" height="15"><use href="#icon-x"></use></svg></button>
+			<button type="button" class="row-btn act-openTab" title="باز کردن در تب جدید" hidden><svg width="15" height="15"><use href="#icon-external"></use></svg></button>
+			<button type="button" class="row-btn act-remove" title="حذف"><svg width="15" height="15"><use href="#icon-trash"></use></svg></button>
+		</div>
+	</li>
+</template>
+
+<template id="linkPickerRowTemplate">
+	<li class="link-picker-row">
+		<label>
+			<input type="checkbox" class="link-picker-check">
+			<span class="link-picker-href mono" dir="ltr"></span>
+			<span class="link-picker-badge"></span>
+		</label>
+	</li>
+</template>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
