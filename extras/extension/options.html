@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>تنظیمات MultiWeb Downloader</title>
+<style>
+	body {
+		font: 13.5px/1.7 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+		padding: 16px;
+		width: 300px;
+		color: #1f2937;
+	}
+
+	label {
+		display: block;
+		font-weight: 600;
+		margin-bottom: 6px;
+	}
+
+	input {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 8px 10px;
+		margin-bottom: 10px;
+		border: 1.5px solid #dde2ea;
+		border-radius: 6px;
+		direction: ltr;
+		text-align: left;
+	}
+
+	button {
+		padding: 8px 16px;
+		border: none;
+		border-radius: 6px;
+		background: #1565c0;
+		color: #fff;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	p {
+		font-size: 11.5px;
+		color: #6b7280;
+		margin-top: 12px;
+	}
+
+	code {
+		direction: ltr;
+		display: inline-block;
+	}
+</style>
+</head>
+<body>
+	<label for="baseUrl">آدرس هاست‌شده‌ی MultiWeb Downloader</label>
+	<input id="baseUrl" type="text" placeholder="https://your-domain.example/">
+	<button id="save">ذخیره</button>
+	<p>
+		این افزونه فقط یک دکمه به صفحه‌های پوشه/فایل گیت‌هاب اضافه می‌کند که لینک فعلی را با
+		<code>?url=</code> به همین آدرس می‌فرستد و در یک تب جدید باز می‌کند — چیزی خودکار دانلود نمی‌شود.
+	</p>
+	<script src="options.js"></script>
+</body>
+</html>

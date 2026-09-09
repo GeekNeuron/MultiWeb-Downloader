@@ -1,0 +1,18 @@
+.mwd-inject-host {
+	padding: 10px 16px 0;
+}
+
+.mwd-inject-btn {
+	font: 600 13px -apple-system, 'Segoe UI', sans-serif;
+	padding: 6px 14px;
+	border-radius: 6px;
+	border: 1px solid #1565c0;
+	background: #1565c0;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.mwd-inject-btn:hover {
+	background: #0d47a1;
+	border-color: #0d47a1;
+}

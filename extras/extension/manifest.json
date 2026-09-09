@@ -1,0 +1,20 @@
+{
+	"manifest_version": 3,
+	"name": "Add to MultiWeb Downloader",
+	"version": "1.0.0",
+	"description": "یک دکمه‌ی «افزودن به MultiWeb Downloader» به صفحه‌های پوشه و فایل گیت‌هاب اضافه می‌کند.",
+	"permissions": ["storage"],
+	"content_scripts": [
+		{
+			"matches": ["https://github.com/*/*/tree/*", "https://github.com/*/*/blob/*"],
+			"js": ["content.js"],
+			"css": ["content.css"],
+			"run_at": "document_idle"
+		}
+	],
+	"action": {
+		"default_popup": "options.html",
+		"default_title": "تنظیمات MultiWeb Downloader"
+	},
+	"options_page": "options.html"
+}
